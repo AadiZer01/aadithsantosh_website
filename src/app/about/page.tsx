@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Chartered Accountant turned equity researcher. Learn about Aadith Santosh\'s background, valuation philosophy, and approach to independent research on Indian listed companies.',
+  description: 'CA Finalist turned equity researcher. Learn about Aadith Santosh\'s background, valuation philosophy, and approach to independent research on Indian listed companies.',
   openGraph: {
     title: 'About Aadith Santosh',
-    description: 'Chartered Accountant turned equity researcher. Valuation philosophy, research approach, and long-term goals in finance.',
+    description: 'CA Finalist turned equity researcher. Valuation philosophy, research approach, and long-term goals in finance.',
   },
 }
 
@@ -50,7 +50,7 @@ export default function AboutPage() {
 
           <p className="mb-4 leading-relaxed text-muted">
 
-            I am Aadith Santosh, a Chartered Accountant based in Coimbatore with a deep interest in how businesses create, sustain, and unlock value. Finance has fascinated me for as long as I can remember  not just the numbers, but the stories behind them, the decisions that shape them, and the assumptions that drive them.
+            I am Aadith Santosh, a CA Finalist based in Coimbatore with a deep interest in how businesses create, sustain, and unlock value. Finance has fascinated me for as long as I can remember  not just the numbers, but the stories behind them, the decisions that shape them, and the assumptions that drive them.
 
           </p>
 
@@ -155,7 +155,7 @@ export default function AboutPage() {
 
           <p className="mb-4 leading-relaxed text-muted">
 
-            As a Chartered Accountant, I have had the opportunity to see how companies operate from the inside. Those experiences made me realise how much value there is in clear thinking, disciplined analysis, and the ability to interpret financial signals before they become visible outcomes. Over the years, I have become increasingly interested in roles that allow me to apply that kind of thinking at scale, whether it is evaluating investments, analysing industries, or helping businesses navigate complex decisions.
+            As a CA Finalist, I have had the opportunity to see how companies operate from the inside. Those experiences made me realise how much value there is in clear thinking, disciplined analysis, and the ability to interpret financial signals before they become visible outcomes. Over the years, I have become increasingly interested in roles that allow me to apply that kind of thinking at scale, whether it is evaluating investments, analysing industries, or helping businesses navigate complex decisions.
 
           </p>
 
@@ -184,7 +184,7 @@ export default function AboutPage() {
             </div>
             <div>
               <p className="font-bold text-ink text-[0.95rem] leading-tight">Aadith Santosh</p>
-              <p className="text-muted text-[0.8rem] mt-0.5">Chartered Accountant</p>
+              <p className="text-muted text-[0.8rem] mt-0.5">CA Finalist</p>
               <p className="text-muted text-[0.8rem]">Coimbatore, India</p>
             </div>
           </div>
