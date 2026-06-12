@@ -414,44 +414,7 @@ export default function SingleResearchPage() {
           </span>
         </div>
 
-        <div className="prose
-                        prose-lg
-                        max-w-none
-
-                        prose-headings:text-ink
-                        prose-headings:font-bold
-
-                        prose-h2:text-3xl
-                        prose-h2:mt-16
-                        prose-h2:mb-6
-
-                        prose-h3:text-2xl
-                        prose-h3:mt-12
-                        prose-h3:mb-5
-
-                        prose-p:text-[1rem]
-                        prose-p:leading-8
-                        prose-p:text-[#3A3A3A]
-
-                        prose-li:leading-8
-                        prose-li:text-[#3A3A3A]
-
-                        prose-table:w-full
-                        prose-table:border-collapse
-
-                        prose-th:bg-panel
-                        prose-th:px-4
-                        prose-th:py-3
-                        prose-th:text-xs
-                        prose-th:text-muted
-
-                        prose-td:px-4
-                        prose-td:py-3
-
-                        prose-blockquote:border-l-4
-                        prose-blockquote:border-accent
-                        prose-blockquote:pl-4
-        ">
+        <div className="rich-editor max-w-none">
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
       </article>
