@@ -67,9 +67,13 @@ export default async function ResearchPage() {
                   {/* Top row — ticker, sector, rating */}
                   <div className="flex items-center gap-2 flex-wrap mb-3">
                     {m.ticker && (
-                      <span className="text-[0.72rem] font-extrabold tracking-[0.06em] text-ink bg-line/40 px-2 py-0.5 rounded">
+                      <Link
+                        href={`/research/company/${m.ticker}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-[0.72rem] font-extrabold tracking-[0.06em] text-ink bg-line/40 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
+                      >
                         {m.ticker}
-                      </span>
+                      </Link>
                     )}
                     {m.sector && (
                       <span className="text-[0.72rem] font-semibold text-muted">

@@ -290,9 +290,12 @@ export default function SingleResearchPage() {
               )
             })()}
             {m.ticker && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-[0.72rem] font-semibold tracking-wide">
-                {m.ticker}{m.sector ? ` · ${m.sector}` : ''}
-              </span>
+              <Link
+                href={`/research/company/${m.ticker}`}
+                className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-[0.72rem] font-semibold tracking-wide hover:bg-accent hover:text-paper transition-colors"
+              >
+                {m.ticker}{m.sector ? ` · ${m.sector}` : ''} · All Reports
+              </Link>
             )}
             {m.nse_bse && (
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-[0.72rem] font-semibold tracking-wide">
