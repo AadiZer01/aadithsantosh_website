@@ -59,18 +59,19 @@ export default async function ResearchPage() {
               const ratingStyle = RATING_STYLES[m.rating] ?? 'bg-muted/12 text-muted'
 
               return (
-                <Link
+                <div
                   key={post.id}
-                  href={`/research/${post.id}`}
-                  className="block bg-panel border border-line rounded-xl p-6 hover:border-accent/40 transition-colors group"
+                  className="relative bg-panel border border-line rounded-xl p-6 hover:border-accent/40 transition-colors group"
                 >
+                  {/* Full-card link overlay */}
+                  <Link href={`/research/${post.id}`} className="absolute inset-0 rounded-xl" aria-label={post.title} />
+
                   {/* Top row — ticker, sector, rating */}
-                  <div className="flex items-center gap-2 flex-wrap mb-3">
+                  <div className="relative flex items-center gap-2 flex-wrap mb-3">
                     {m.ticker && (
                       <Link
                         href={`/research/company/${m.ticker}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-[0.72rem] font-extrabold tracking-[0.06em] text-ink bg-line/40 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
+                        className="relative z-10 text-[0.72rem] font-extrabold tracking-[0.06em] text-ink bg-line/40 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
                       >
                         {m.ticker}
                       </Link>
@@ -119,7 +120,7 @@ export default async function ResearchPage() {
                       </span>
                     )}
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>
