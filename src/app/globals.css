@@ -73,6 +73,8 @@ body {
 .rich-editor p {
   margin: 0.5rem 0;
   line-height: 1.7;
+  text-align: justify;
+  hyphens: auto;
 }
 .rich-editor blockquote {
   border-left: 3px solid var(--accent);
@@ -197,6 +199,8 @@ body {
   position: relative;
   padding-left: 22px;
   margin-bottom: 10px;
+  text-align: justify;
+  hyphens: auto;
 }
 .rich-editor .section ul li::before {
   content: "—";
@@ -254,10 +258,12 @@ body {
 .rich-editor .table-wrap table { font-size: 0.85rem; }
 .rich-editor .table-wrap thead tr { background: var(--ink); }
 .rich-editor .table-wrap thead th {
+  background: transparent;
   color: white;
   border: none;
   padding: 9px 14px;
   font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.03em;
   text-align: center;
 }
