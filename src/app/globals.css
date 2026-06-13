@@ -115,10 +115,15 @@ body {
 
 /* Newsletter HTML paste — hide redundant wrapper elements the site already provides */
 .rich-editor .masthead,
+.rich-editor .masthead-brand,
+.rich-editor .masthead-meta,
 .rich-editor .hero-title,
 .rich-editor .byline,
-.rich-editor > .tag:first-of-type,
 .rich-editor .tags-row {
+  display: none;
+}
+/* Hide the standalone "Equity Insight" tag div (not tag-pills inside tags-row) */
+.rich-editor .page > .tag {
   display: none;
 }
 
@@ -183,8 +188,23 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
-/* Custom bullet list */
-.rich-editor ul li::before { content: none; }
+/* Newsletter section lists: em-dash bullets, no indent */
+.rich-editor .section ul {
+  list-style: none;
+  padding-left: 0;
+}
+.rich-editor .section ul li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+}
+.rich-editor .section ul li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
 
 /* Watch list grid */
 .rich-editor .watch-grid { display: grid; gap: 10px; margin-top: 12px; }
@@ -239,9 +259,19 @@ body {
   padding: 9px 14px;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
+  text-align: center;
 }
+.rich-editor .table-wrap thead th:first-child { text-align: left; }
 .rich-editor .table-wrap tbody tr:nth-child(odd) { background: #FAF4F0; }
-.rich-editor .table-wrap tbody td { border: none; border-bottom: 1px solid var(--line); }
+.rich-editor .table-wrap tbody td {
+  border: none;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.rich-editor .table-wrap tbody td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
 .rich-editor .table-note {
   font-size: 0.72rem;
   color: var(--muted);
