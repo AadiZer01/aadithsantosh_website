@@ -17,9 +17,10 @@ export async function generateMetadata(
 
   if (!insight) return { title: 'Insight Not Found' }
 
-  const description = insight.body.length > 160
-    ? insight.body.slice(0, 157).trimEnd() + '…'
-    : insight.body
+  const plainText = insight.body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  const description = plainText.length > 160
+    ? plainText.slice(0, 157).trimEnd() + '…'
+    : plainText
 
   return {
     title: insight.title,
@@ -77,12 +78,13 @@ export default async function InsightPage({ params }: { params: Promise<{ id: st
         {insight.tags?.length > 0 && (
           <div className="flex items-center gap-2 flex-wrap mb-5">
             {insight.tags.map((tag: string) => (
-              <span
+              <Link
                 key={tag}
-                className="text-[0.72rem] font-bold uppercase tracking-[0.06em] text-accent bg-accent/8 px-2 py-0.5 rounded"
+                href={`/insights?tag=${encodeURIComponent(tag)}`}
+                className="text-[0.72rem] font-bold uppercase tracking-[0.06em] text-accent bg-accent/8 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         )}
@@ -113,9 +115,10 @@ export default async function InsightPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Body */}
-        <div className="text-muted leading-[1.85] text-[1.05rem] whitespace-pre-wrap">
-          {insight.body}
-        </div>
+        <div
+          className="rich-editor leading-[1.85] text-[1.05rem]"
+          dangerouslySetInnerHTML={{ __html: insight.body }}
+        />
 
         {/* Footer */}
         <div className="mt-12 pt-8 border-t border-line">

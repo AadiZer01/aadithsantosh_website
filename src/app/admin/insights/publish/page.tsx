@@ -4,9 +4,21 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Eye, Code } from 'lucide-react'
 
 const SUGGESTED_TAGS = ['Macro', 'Hospitality', 'Technology', 'Manufacturing', 'Valuation', 'Sector Note', 'Company Watch']
+
+function extractTitle(html: string): string {
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.querySelector('h1, h2, h3')?.textContent?.trim() || ''
+}
+
+function stripHtml(html: string): string {
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.textContent || ''
+}
 
 export default function PublishInsightPage() {
   const router = useRouter()
@@ -18,8 +30,17 @@ export default function PublishInsightPage() {
   const [customTag, setCustomTag] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [preview, setPreview] = useState(false)
 
-  const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0
+  const wordCount = body.trim() ? stripHtml(body).trim().split(/\s+/).filter(Boolean).length : 0
+
+  const handleBodyChange = (html: string) => {
+    setBody(html)
+    if (!title.trim()) {
+      const extracted = extractTitle(html)
+      if (extracted) setTitle(extracted)
+    }
+  }
 
   const toggleTag = (tag: string) => {
     setTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])
@@ -141,18 +162,37 @@ export default function PublishInsightPage() {
         {/* Body */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-bold text-ink">Body</label>
-            <span className={`text-xs ${wordCount > 500 ? 'text-caution' : 'text-muted'}`}>
-              {wordCount} words {wordCount > 0 && wordCount < 150 && '· aim for 200–500'}
-            </span>
+            <label className="text-sm font-bold text-ink">HTML Content</label>
+            <div className="flex items-center gap-3">
+              <span className={`text-xs ${wordCount > 500 ? 'text-caution' : 'text-muted'}`}>
+                {wordCount} words
+              </span>
+              <button
+                type="button"
+                onClick={() => setPreview(p => !p)}
+                className="flex items-center gap-1.5 text-xs font-bold text-muted hover:text-ink transition-colors"
+              >
+                {preview ? <><Code className="w-3.5 h-3.5" /> Edit HTML</> : <><Eye className="w-3.5 h-3.5" /> Preview</>}
+              </button>
+            </div>
           </div>
-          <textarea
-            value={body}
-            onChange={e => setBody(e.target.value)}
-            rows={16}
-            placeholder="Write your insight here. Keep it focused — one idea, clearly expressed."
-            className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-[0.97rem] leading-[1.8] resize-y"
-          />
+          {preview ? (
+            <div
+              className="rich-editor min-h-[400px] p-5 rounded-lg border border-line bg-paper text-sm leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: body }}
+            />
+          ) : (
+            <textarea
+              value={body}
+              onChange={e => handleBodyChange(e.target.value)}
+              rows={18}
+              placeholder="Paste your HTML here. The title will be auto-extracted from the first heading."
+              className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-[0.85rem] leading-[1.8] resize-y font-mono"
+            />
+          )}
+          <p className="text-xs text-muted mt-1.5">
+            Paste HTML exported from Notion, Word, or any editor. Title auto-fills from the first heading.
+          </p>
         </div>
 
         {error && (
