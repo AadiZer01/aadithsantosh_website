@@ -209,7 +209,7 @@ export default function RichTextEditor({
           <Image className="w-[18px] h-[18px]" />
           <input type="file" accept="image/*" onChange={insertImage} className="hidden" disabled={uploadingImage} />
         </label>
-        {uploadingImage && <span className="text-[10px] text-accent ml-1 animate-pulse">Uploading…</span>}
+        {uploadingImage && <span className="text-2xs text-accent ml-1 animate-pulse">Uploading…</span>}
       </div>
 
       {/* Editor area */}
@@ -262,7 +262,7 @@ export default function RichTextEditor({
                 </tbody>
               </table>
             </div>
-            <p className="text-[11px] text-muted mb-3 text-center">{tableRows} × {tableCols}</p>
+            <p className="text-2xs text-muted mb-3 text-center">{tableRows} × {tableCols}</p>
             <button
               onClick={insertTable}
               className="w-full px-4 py-2 bg-ink text-paper rounded-lg font-bold text-sm hover:bg-ink/90 transition-colors"

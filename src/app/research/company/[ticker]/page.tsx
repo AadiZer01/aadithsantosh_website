@@ -45,18 +45,18 @@ export default async function CompanyPage({
       {/* Company header */}
       <section className="pb-8 border-b border-line mb-10 max-w-[760px]">
         <div className="flex items-center gap-3 mb-5">
-          <span className="text-[0.78rem] font-extrabold tracking-[0.08em] uppercase bg-ink text-paper px-3 py-1 rounded">
+          <span className="text-xs font-extrabold tracking-[0.08em] uppercase bg-ink text-paper px-3 py-1 rounded">
             {upper}
           </span>
           {m.sector && (
             <span className="text-sm text-muted font-medium">{m.sector}</span>
           )}
         </div>
-        <h1 className="text-[clamp(1.9rem,3.5vw,2.8rem)] font-bold text-ink leading-tight tracking-tight mb-4">
+        <h1 className="text-h1 font-bold text-ink leading-tight tracking-tight mb-4">
           {upper}
         </h1>
         {m.tagline && (
-          <p className="text-[1.05rem] text-muted leading-relaxed">{m.tagline}</p>
+          <p className="text-lg text-muted leading-relaxed">{m.tagline}</p>
         )}
       </section>
 
@@ -64,7 +64,7 @@ export default async function CompanyPage({
       <section className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12">
         {m.rating && (
           <div className="bg-panel border border-line rounded-xl p-4">
-            <p className="text-[0.7rem] font-bold uppercase tracking-widest text-muted mb-1.5">Current Rating</p>
+            <p className="text-2xs font-bold uppercase tracking-widest text-muted mb-1.5">Current Rating</p>
             <span className={`text-sm font-black px-2.5 py-0.5 rounded-full ${RATING_STYLES[m.rating] || 'bg-line text-ink'}`}>
               {m.rating}
             </span>
@@ -72,13 +72,13 @@ export default async function CompanyPage({
         )}
         {m.weighted_avg_tp && (
           <div className="bg-panel border border-line rounded-xl p-4">
-            <p className="text-[0.7rem] font-bold uppercase tracking-widest text-muted mb-1.5">Target Price</p>
+            <p className="text-2xs font-bold uppercase tracking-widest text-muted mb-1.5">Target Price</p>
             <p className="text-sm font-bold text-ink">{m.weighted_avg_tp}</p>
           </div>
         )}
         {m.implied_upside && (
           <div className="bg-panel border border-line rounded-xl p-4">
-            <p className="text-[0.7rem] font-bold uppercase tracking-widest text-muted mb-1.5">Implied Upside</p>
+            <p className="text-2xs font-bold uppercase tracking-widest text-muted mb-1.5">Implied Upside</p>
             <p className={`text-sm font-bold ${String(m.implied_upside).startsWith('+') ? 'text-positive' : 'text-negative'}`}>
               {m.implied_upside}
             </p>
@@ -86,7 +86,7 @@ export default async function CompanyPage({
         )}
         {m.horizon && (
           <div className="bg-panel border border-line rounded-xl p-4">
-            <p className="text-[0.7rem] font-bold uppercase tracking-widest text-muted mb-1.5">Horizon</p>
+            <p className="text-2xs font-bold uppercase tracking-widest text-muted mb-1.5">Horizon</p>
             <p className="text-sm font-bold text-ink">{m.horizon}</p>
           </div>
         )}
@@ -102,11 +102,11 @@ export default async function CompanyPage({
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-panel border-b border-line">
-                <th className="text-left px-4 py-3 text-[0.7rem] font-bold text-muted uppercase tracking-wider">Date</th>
-                <th className="text-left px-4 py-3 text-[0.7rem] font-bold text-muted uppercase tracking-wider">Rating</th>
-                <th className="text-left px-4 py-3 text-[0.7rem] font-bold text-muted uppercase tracking-wider">Target Price</th>
-                <th className="text-left px-4 py-3 text-[0.7rem] font-bold text-muted uppercase tracking-wider">CMP at Report</th>
-                <th className="text-left px-4 py-3 text-[0.7rem] font-bold text-muted uppercase tracking-wider">Upside</th>
+                <th className="text-left px-4 py-3 text-2xs font-bold text-muted uppercase tracking-wider">Date</th>
+                <th className="text-left px-4 py-3 text-2xs font-bold text-muted uppercase tracking-wider">Rating</th>
+                <th className="text-left px-4 py-3 text-2xs font-bold text-muted uppercase tracking-wider">Target Price</th>
+                <th className="text-left px-4 py-3 text-2xs font-bold text-muted uppercase tracking-wider">CMP at Report</th>
+                <th className="text-left px-4 py-3 text-2xs font-bold text-muted uppercase tracking-wider">Upside</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -126,12 +126,12 @@ export default async function CompanyPage({
                     <td className="px-4 py-3 text-muted">
                       {dateStr}
                       {isLatest && (
-                        <span className="ml-2 text-[10px] font-bold text-accent uppercase tracking-wide">Latest</span>
+                        <span className="ml-2 text-2xs font-bold text-accent uppercase tracking-wide">Latest</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
                       {rm.rating && (
-                        <span className={`text-[0.72rem] font-black px-2 py-0.5 rounded-full ${RATING_STYLES[rm.rating] || 'bg-line text-ink'}`}>
+                        <span className={`text-xs font-black px-2 py-0.5 rounded-full ${RATING_STYLES[rm.rating] || 'bg-line text-ink'}`}>
                           {rm.rating}
                         </span>
                       )}
@@ -176,12 +176,12 @@ export default async function CompanyPage({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1.5">
                       {rm.rating && (
-                        <span className={`text-[0.68rem] font-black px-2 py-0.5 rounded-full ${RATING_STYLES[rm.rating] || 'bg-line text-ink'}`}>
+                        <span className={`text-2xs font-black px-2 py-0.5 rounded-full ${RATING_STYLES[rm.rating] || 'bg-line text-ink'}`}>
                           {rm.rating}
                         </span>
                       )}
                       {i === 0 && (
-                        <span className="text-[0.68rem] font-bold text-accent uppercase tracking-wide">Latest</span>
+                        <span className="text-2xs font-bold text-accent uppercase tracking-wide">Latest</span>
                       )}
                     </div>
                     <h3 className="font-bold text-ink group-hover:text-accent transition-colors mb-1 leading-snug">

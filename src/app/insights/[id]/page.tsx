@@ -81,7 +81,7 @@ export default async function InsightPage({ params }: { params: Promise<{ id: st
               <Link
                 key={tag}
                 href={`/insights?tag=${encodeURIComponent(tag)}`}
-                className="text-[0.72rem] font-bold uppercase tracking-[0.06em] text-accent bg-accent/8 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
+                className="text-xs font-bold uppercase tracking-[0.06em] text-accent bg-accent/8 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
               >
                 {tag}
               </Link>
@@ -90,7 +90,7 @@ export default async function InsightPage({ params }: { params: Promise<{ id: st
         )}
 
         {/* Title */}
-        <h1 className="text-[clamp(1.7rem,3vw,2.4rem)] font-bold text-ink leading-[1.15] tracking-tight mb-4">
+        <h1 className="text-h1 font-bold text-ink leading-[1.15] tracking-tight mb-4">
           {insight.title}
         </h1>
 
@@ -116,7 +116,7 @@ export default async function InsightPage({ params }: { params: Promise<{ id: st
 
         {/* Body */}
         <div
-          className="rich-editor leading-[1.85] text-[1.05rem]"
+          className="rich-editor leading-[1.85] text-lg"
           dangerouslySetInnerHTML={{ __html: insight.body }}
         />
 

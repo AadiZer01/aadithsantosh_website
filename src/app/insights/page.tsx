@@ -29,14 +29,14 @@ export default async function InsightsPage({
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-[54px] pb-[86px]">
 
       <section className="pb-[38px] border-b border-line max-w-[760px]">
-        <p className="text-accent font-extrabold text-[0.78rem] tracking-[0.08em] uppercase mb-4">
+        <p className="text-accent font-extrabold text-xs tracking-[0.08em] uppercase mb-4">
           Insights
         </p>
         <div className="w-10 h-[3px] bg-accent rounded-full mb-5" />
-        <h1 className="text-[clamp(1.9rem,3.5vw,2.8rem)] font-bold text-ink leading-[1.1] tracking-tight mb-5">
+        <h1 className="text-h1 font-bold text-ink leading-[1.1] tracking-tight mb-5">
           Market observations, sector notes, and valuation thinking.
         </h1>
-        <p className="text-[clamp(1rem,1.5vw,1.15rem)] text-[#34445e] leading-relaxed">
+        <p className="text-lg text-[#34445e] leading-relaxed">
           Short-form commentary on companies, sectors, and ideas I am actively following — published between full research reports.
         </p>
       </section>
@@ -45,7 +45,7 @@ export default async function InsightsPage({
         {tag && (
           <div className="flex items-center gap-2 mb-6">
             <span className="text-sm text-muted">Filtered by:</span>
-            <span className="inline-flex items-center gap-1.5 text-[0.78rem] font-bold text-accent bg-accent/8 px-2.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-accent bg-accent/8 px-2.5 py-1 rounded-full">
               {tag}
               <Link href="/insights" aria-label="Clear filter">
                 <X className="w-3 h-3 hover:text-negative transition-colors" />
@@ -87,7 +87,7 @@ export default async function InsightsPage({
                       <Link
                         key={t}
                         href={`/insights?tag=${encodeURIComponent(t)}`}
-                        className={`relative z-10 text-[0.72rem] font-bold uppercase tracking-[0.06em] px-2 py-0.5 rounded transition-colors ${
+                        className={`relative z-10 text-xs font-bold uppercase tracking-[0.06em] px-2 py-0.5 rounded transition-colors ${
                           t === tag
                             ? 'bg-accent text-paper'
                             : 'text-accent bg-accent/8 hover:bg-accent hover:text-paper'

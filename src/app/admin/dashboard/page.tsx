@@ -263,7 +263,7 @@ export default async function AdminDashboard() {
                     <p className="text-sm font-medium text-ink truncate">{insight.title}</p>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       {insight.tags?.slice(0, 2).map((tag: string) => (
-                        <span key={tag} className="text-[0.65rem] font-bold text-accent/70">{tag}</span>
+                        <span key={tag} className="text-2xs font-bold text-accent/70">{tag}</span>
                       ))}
                       <span className="text-xs text-muted">
                         {insight.tags?.length > 2 && '· '}

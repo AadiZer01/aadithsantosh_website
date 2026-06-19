@@ -126,7 +126,7 @@ export default function EditInsightPage() {
 
       <div className="flex items-start justify-between mb-8">
         <div>
-          <p className="text-accent font-extrabold text-[0.78rem] tracking-[0.08em] uppercase mb-2">Admin</p>
+          <p className="text-accent font-extrabold text-xs tracking-[0.08em] uppercase mb-2">Admin</p>
           <h1 className="text-2xl font-bold text-ink">Edit Insight</h1>
         </div>
         <button
@@ -149,7 +149,7 @@ export default function EditInsightPage() {
             type="text"
             value={title}
             onChange={e => setTitle(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-[1rem]"
+            className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-base"
           />
         </div>
 
@@ -162,7 +162,7 @@ export default function EditInsightPage() {
                 key={tag}
                 type="button"
                 onClick={() => toggleTag(tag)}
-                className={`px-3 py-1 rounded-full text-[0.78rem] font-bold border transition-colors ${
+                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${
                   tags.includes(tag)
                     ? 'bg-accent text-paper border-accent'
                     : 'bg-panel text-muted border-line hover:border-accent/50'
@@ -192,7 +192,7 @@ export default function EditInsightPage() {
           {tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-2">
               {tags.map(tag => (
-                <span key={tag} className="inline-flex items-center gap-1 text-[0.78rem] font-bold text-accent bg-accent/8 px-2 py-0.5 rounded">
+                <span key={tag} className="inline-flex items-center gap-1 text-xs font-bold text-accent bg-accent/8 px-2 py-0.5 rounded">
                   {tag}
                   <button type="button" onClick={() => toggleTag(tag)} className="ml-0.5 hover:text-negative">×</button>
                 </span>
@@ -228,7 +228,7 @@ export default function EditInsightPage() {
               value={body}
               onChange={e => handleBodyChange(e.target.value)}
               rows={18}
-              className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-[0.85rem] leading-[1.8] resize-y font-mono"
+              className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-sm leading-[1.8] resize-y font-mono"
             />
           )}
           <p className="text-xs text-muted mt-1.5">
@@ -242,7 +242,7 @@ export default function EditInsightPage() {
           <button
             type="submit"
             disabled={saving}
-            className="min-h-[46px] px-8 bg-ink text-paper rounded-lg font-bold text-[0.95rem] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:translate-y-0"
+            className="min-h-[46px] px-8 bg-ink text-paper rounded-lg font-bold text-ui hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:translate-y-0"
           >
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

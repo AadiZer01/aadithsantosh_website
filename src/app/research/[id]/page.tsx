@@ -263,6 +263,7 @@ export default function SingleResearchPage() {
           <h1 className="text-4xl
                         md:text-5xl
                         font-extrabold
+                        font-display
                         text-ink
                         leading-tight
                         mb-4">
@@ -286,25 +287,25 @@ export default function SingleResearchPage() {
                 'UNDER REVIEW': 'bg-muted/15 text-muted',
               } as Record<string, string>)[m.rating] || 'bg-muted/15 text-muted'
               return (
-                <span className={`inline-flex items-center justify-center min-w-[68px] min-h-[30px] px-[10px] py-[4px] rounded-full text-[0.76rem] font-black tracking-[0.08em] uppercase ${ratingClass}`}>{m.rating}</span>
+                <span className={`inline-flex items-center justify-center min-w-[68px] min-h-[30px] px-[10px] py-[4px] rounded-full text-xs font-black tracking-[0.08em] uppercase ${ratingClass}`}>{m.rating}</span>
               )
             })()}
             {m.ticker && (
               <Link
                 href={`/research/company/${m.ticker}`}
-                className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-[0.72rem] font-semibold tracking-wide hover:bg-accent hover:text-paper transition-colors"
+                className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-xs font-semibold tracking-wide hover:bg-accent hover:text-paper transition-colors"
               >
                 {m.ticker}{m.sector ? ` · ${m.sector}` : ''} · All Reports
               </Link>
             )}
             {m.nse_bse && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-[0.72rem] font-semibold tracking-wide">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-line/30 text-muted text-xs font-semibold tracking-wide">
                 {m.nse_bse}
               </span>
             )}
             {post.pdf_url && (
               <a href={post.pdf_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-line/30 text-ink text-[0.72rem] font-semibold tracking-wide hover:bg-line/50 transition-colors">
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-line/30 text-ink text-xs font-semibold tracking-wide hover:bg-line/50 transition-colors">
                 <Download className="w-3 h-3" />
                 Download PDF
               </a>
@@ -334,7 +335,7 @@ export default function SingleResearchPage() {
                 <div className="flex items-center gap-1.5 mb-1">
                   <span className="text-xs text-muted">{d.label}</span>
                   {d.live && liveCmp && (
-                    <span className="inline-flex items-center gap-1 text-[0.65rem] font-bold text-positive">
+                    <span className="inline-flex items-center gap-1 text-2xs font-bold text-positive">
                       <span className={`w-1.5 h-1.5 rounded-full bg-positive ${marketState === 'REGULAR' ? 'animate-pulse' : ''}`} />
                       {marketState === 'REGULAR' ? 'Live' : 'Last'}
                     </span>
@@ -346,7 +347,7 @@ export default function SingleResearchPage() {
                     : d.value}
                 </strong>
                 {d.live && liveCmp && m.cmp && (
-                  <span className="block text-[0.7rem] text-muted mt-0.5">
+                  <span className="block text-2xs text-muted mt-0.5">
                     at pub: {m.cmp}
                   </span>
                 )}
@@ -361,10 +362,7 @@ export default function SingleResearchPage() {
          ════════════════════════════════════════════════ */}
       {[m.market_cap, m.high_52w, m.low_52w, m.shares_outstanding, m.pe_ratio, m.ev_ebitda, m.dividend_yield, m.roce_roe, m.nse_bse].some(Boolean) && (
         <section className="mb-10">
-          <h2 className="text-lg
-                        font-bold
-                        text-ink
-                        mb-4">Company Snapshot</h2>
+          <h2 className="text-lg font-bold font-sans text-ink mb-4">Company Snapshot</h2>
           <div className="overflow-x-auto
                           rounded-2xl
                           border border-line
@@ -440,7 +438,7 @@ export default function SingleResearchPage() {
                             justify-between
                             gap-4">
           <div>
-            <h2 className="text-sm font-bold text-ink">PDF Version</h2>
+            <h2 className="text-sm font-bold font-sans text-ink">PDF Version</h2>
             <p className="text-xs text-muted mt-1">The full report is available as a downloadable PDF.</p>
           </div>
           <a href={post.pdf_url} target="_blank" rel="noopener noreferrer"
@@ -459,7 +457,7 @@ export default function SingleResearchPage() {
                           rounded-2xl
                           border border-line
                           bg-panel">
-        <h2 className="text-xs font-bold text-ink uppercase tracking-wide mb-2">Disclaimer</h2>
+        <h2 className="text-xs font-bold font-sans text-ink uppercase tracking-wide mb-2">Disclaimer</h2>
         <p className="text-xs text-muted leading-relaxed">
           This report has been prepared for informational and academic purposes only and does not constitute investment advice, an offer to buy or sell securities, or a recommendation to take any investment action. The analysis is based on publicly available information, financial data, management commentary, and valuation assumptions that may not fully reflect future business performance or market conditions. While reasonable care has been taken in preparing this report, no assurance is given regarding the accuracy, completeness, or reliability of the information presented. Actual outcomes may differ materially from estimates and projections due to changes in macroeconomic conditions, industry trends, company performance, regulatory developments, or other unforeseen factors. Readers should conduct their own independent analysis and due diligence before making any investment decision.
         </p>
@@ -469,7 +467,7 @@ export default function SingleResearchPage() {
           COMMENTS
          ════════════════════════════════════════════════ */}
       <section className="mt-16 pt-10 border-t border-line">
-        <h2 className="text-xl font-semibold text-ink mb-6">
+        <h2 className="text-xl font-semibold font-sans text-ink mb-6">
           Comments ({comments.length})
         </h2>
 

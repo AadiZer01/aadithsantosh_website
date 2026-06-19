@@ -72,10 +72,14 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="inline-flex items-center gap-3 no-underline text-inherit">
-              <span className="grid w-[38px] h-[38px] place-items-center border border-ink rounded-full bg-ink text-paper font-extrabold text-[0.85rem]">
+            <Link href="/" className="inline-flex items-center gap-2.5 no-underline text-inherit">
+              <span className="grid w-8 h-8 shrink-0 place-items-center rounded-full bg-ink text-paper font-extrabold text-xs tracking-tight">
                 AS
               </span>
+              <div className="flex flex-col leading-none">
+                <span className="font-display font-bold text-[1.05rem] text-ink tracking-tight leading-none">Aadith Santosh</span>
+                <span className="text-2xs font-bold uppercase tracking-[0.1em] text-muted mt-0.5">Equity Research</span>
+              </div>
             </Link>
           </div>
 
@@ -84,7 +88,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[0.94rem] transition-colors border-b border-transparent ${
+                className={`text-ui transition-colors border-b border-transparent ${
                   pathname === link.href
                     ? 'text-ink border-ink'
                     : 'text-muted hover:text-ink hover:border-ink'
@@ -99,27 +103,27 @@ export default function Navbar() {
             {user ? (
               <button
                 onClick={handleLogout}
-                className="text-[0.94rem] text-muted hover:text-ink transition-colors"
+                className="text-ui text-muted hover:text-ink transition-colors"
               >
                 Logout
               </button>
             ) : (
               <Link
                 href="/login"
-                className="text-[0.94rem] text-muted hover:text-ink transition-colors"
+                className="text-ui text-muted hover:text-ink transition-colors"
               >
                 Login
               </Link>
             )}
             <Link
               href="mailto:aadithsantosh@outlook.com"
-              className="inline-flex items-center justify-center min-h-[36px] px-4 border border-ink text-ink rounded-lg font-bold text-[0.85rem] hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center justify-center min-h-[36px] px-4 border border-ink text-ink rounded-lg font-bold text-sm hover:-translate-y-0.5 transition-all"
             >
               Contact
             </Link>
             <Link
               href="/research"
-              className="inline-flex items-center justify-center min-h-[36px] px-4 bg-ink text-paper rounded-lg font-bold text-[0.85rem] hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center justify-center min-h-[36px] px-4 bg-ink text-paper rounded-lg font-bold text-sm hover:-translate-y-0.5 transition-all"
             >
               View Reports
             </Link>

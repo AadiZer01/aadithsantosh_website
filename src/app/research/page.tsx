@@ -32,14 +32,14 @@ export default async function ResearchPage() {
 
       {/* Hero */}
       <section className="pb-[38px] border-b border-line max-w-[760px]">
-        <p className="text-accent font-extrabold text-[0.78rem] tracking-[0.08em] uppercase mb-4">
+        <p className="text-accent font-extrabold text-xs tracking-[0.08em] uppercase mb-4">
           Research
         </p>
         <div className="w-10 h-[3px] bg-accent rounded-full mb-5" />
-        <h1 className="text-[clamp(1.9rem,3.5vw,2.8rem)] font-bold text-ink leading-[1.1] tracking-tight mb-5">
+        <h1 className="text-h1 font-bold text-ink leading-[1.1] tracking-tight mb-5">
           Independent equity research on Indian listed companies.
         </h1>
-        <p className="text-[clamp(1rem,1.5vw,1.15rem)] text-[#34445e] leading-relaxed">
+        <p className="text-lg text-[#34445e] leading-relaxed">
           In-depth valuation reports covering business quality, financial durability, and 12–18 month investment views.
         </p>
       </section>
@@ -71,18 +71,18 @@ export default async function ResearchPage() {
                     {m.ticker && (
                       <Link
                         href={`/research/company/${m.ticker}`}
-                        className="relative z-10 text-[0.72rem] font-extrabold tracking-[0.06em] text-ink bg-line/40 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
+                        className="relative z-10 text-xs font-extrabold tracking-[0.06em] text-ink bg-line/40 px-2 py-0.5 rounded hover:bg-accent hover:text-paper transition-colors"
                       >
                         {m.ticker}
                       </Link>
                     )}
                     {m.sector && (
-                      <span className="text-[0.72rem] font-semibold text-muted">
+                      <span className="text-xs font-semibold text-muted">
                         {m.sector}
                       </span>
                     )}
                     {m.rating && (
-                      <span className={`ml-auto text-[0.72rem] font-black uppercase tracking-[0.06em] px-2.5 py-0.5 rounded-full ${ratingStyle}`}>
+                      <span className={`ml-auto text-xs font-black uppercase tracking-[0.06em] px-2.5 py-0.5 rounded-full ${ratingStyle}`}>
                         {m.rating}
                       </span>
                     )}

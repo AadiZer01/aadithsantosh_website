@@ -22,17 +22,17 @@ export default function AboutPage() {
 
       <section className="pb-[38px] border-b border-line max-w-[760px]">
 
-        <p className="text-accent font-extrabold text-[0.78rem] tracking-[0.08em] uppercase mb-4">
+        <p className="text-accent font-extrabold text-xs tracking-[0.08em] uppercase mb-4">
           About
         </p>
 
         <div className="w-10 h-[3px] bg-accent rounded-full mb-5" />
 
-        <h1 className="text-[clamp(1.9rem,3.5vw,2.8rem)] font-bold text-ink leading-[1.1] tracking-tight mb-5">
+        <h1 className="text-h1 font-bold text-ink leading-[1.1] tracking-tight mb-5">
           Independent research shaped by financial analysis and real-world business exposure.
         </h1>
 
-        <p className="text-[clamp(1rem,1.5vw,1.15rem)] text-[#34445e] leading-relaxed">
+        <p className="text-lg text-[#34445e] leading-relaxed">
           I publish equity research reports focused on business quality, valuation discipline, and 12 to 18 month investment views.
         </p>
 
@@ -134,10 +134,10 @@ export default function AboutPage() {
               },
             ].map(({ num, title, body }) => (
               <div key={num} className="flex gap-5 p-5 rounded-lg border border-line bg-panel/60 hover:border-accent/40 transition-colors">
-                <span className="text-[1.1rem] font-extrabold text-accent/60 tabular-nums shrink-0 mt-0.5">{num}</span>
+                <span className="text-lg font-extrabold text-accent/60 tabular-nums shrink-0 mt-0.5">{num}</span>
                 <div>
-                  <h3 className="text-[1rem] font-bold text-ink mb-1.5">{title}</h3>
-                  <p className="text-muted leading-relaxed text-[0.95rem]">{body}</p>
+                  <h3 className="text-base font-bold text-ink mb-1.5">{title}</h3>
+                  <p className="text-muted leading-relaxed text-ui">{body}</p>
                 </div>
               </div>
             ))}
@@ -166,7 +166,7 @@ export default function AboutPage() {
           </p>
 
           <blockquote className="mt-8 pl-5 border-l-[3px] border-accent">
-            <p className="text-ink font-semibold italic text-[1.05rem] leading-relaxed">
+            <p className="text-ink font-semibold italic text-lg leading-relaxed">
               "The space where numbers meet judgement — where the right insight at the right time can change the trajectory of an entire organisation."
             </p>
           </blockquote>
@@ -183,9 +183,9 @@ export default function AboutPage() {
               <span className="text-paper font-extrabold text-lg leading-none">AS</span>
             </div>
             <div>
-              <p className="font-bold text-ink text-[0.95rem] leading-tight">Aadith Santosh</p>
-              <p className="text-muted text-[0.8rem] mt-0.5">CA Finalist</p>
-              <p className="text-muted text-[0.8rem]">Coimbatore, India</p>
+              <p className="font-bold text-ink text-ui leading-tight">Aadith Santosh</p>
+              <p className="text-muted text-xs mt-0.5">CA Finalist</p>
+              <p className="text-muted text-xs">Coimbatore, India</p>
             </div>
           </div>
 
@@ -210,7 +210,7 @@ export default function AboutPage() {
 
               href="/research"
 
-              className="block w-full text-center min-h-[46px] leading-[46px] px-[18px] border border-ink bg-ink text-paper rounded-lg font-extrabold text-[0.95rem] hover:-translate-y-0.5 transition-all"
+              className="block w-full text-center min-h-[46px] leading-[46px] px-[18px] border border-ink bg-ink text-paper rounded-lg font-extrabold text-ui hover:-translate-y-0.5 transition-all"
 
             >
 
@@ -222,7 +222,7 @@ export default function AboutPage() {
 
               href="mailto:aadithsantosh@outlook.com"
 
-              className="block w-full text-center min-h-[46px] leading-[46px] px-[18px] border border-ink text-ink rounded-lg font-extrabold text-[0.95rem] hover:-translate-y-0.5 transition-all"
+              className="block w-full text-center min-h-[46px] leading-[46px] px-[18px] border border-ink text-ink rounded-lg font-extrabold text-ui hover:-translate-y-0.5 transition-all"
 
             >
 
@@ -238,7 +238,7 @@ export default function AboutPage() {
 
               rel="noopener noreferrer"
 
-              className="block w-full text-center min-h-[46px] leading-[46px] px-[18px] border border-ink text-ink rounded-lg font-extrabold text-[0.95rem] hover:-translate-y-0.5 transition-all"
+              className="block w-full text-center min-h-[46px] leading-[46px] px-[18px] border border-ink text-ink rounded-lg font-extrabold text-ui hover:-translate-y-0.5 transition-all"
 
             >
 

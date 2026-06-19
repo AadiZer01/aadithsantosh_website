@@ -361,7 +361,7 @@ export default function EditReportPage() {
 
           <div className="flex items-center gap-4">
             <button type="submit" disabled={loading || !title.trim() || !content.trim()}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-paper rounded-lg font-bold text-[0.95rem] hover:bg-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+              className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-paper rounded-lg font-bold text-ui hover:bg-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
               <Send className="w-4 h-4" />
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
