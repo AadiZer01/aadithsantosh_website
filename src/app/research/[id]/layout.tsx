@@ -12,14 +12,14 @@ export async function generateMetadata(
   // Try slug first, then fall back to UUID
   let { data: postRows } = await supabase
     .from('research_posts')
-    .select('title, excerpt, report_meta, seo_meta')
+    .select('slug, title, excerpt, report_meta, seo_meta')
     .eq('slug', id)
     .limit(1)
 
   if (!postRows?.length) {
     const { data: byId } = await supabase
       .from('research_posts')
-      .select('title, excerpt, report_meta, seo_meta')
+      .select('slug, title, excerpt, report_meta, seo_meta')
       .eq('id', id)
       .limit(1)
     postRows = byId
