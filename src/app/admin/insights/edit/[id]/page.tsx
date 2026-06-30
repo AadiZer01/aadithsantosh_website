@@ -20,14 +20,20 @@ function stripHtml(html: string): string {
   return div.textContent || ''
 }
 
+type SeoMeta = { seo_title: string; seo_description: string; og_title: string; og_description: string }
+const defaultSeo: SeoMeta = { seo_title: '', seo_description: '', og_title: '', og_description: '' }
+
 export default function EditInsightPage() {
   const router = useRouter()
   const params = useParams()
   const supabase = createClient()
 
   const [title, setTitle] = useState('')
+  const [slug, setSlug] = useState('')
   const [body, setBody] = useState('')
   const [tags, setTags] = useState<string[]>([])
+  const [seo, setSeo] = useState<SeoMeta>(defaultSeo)
+  const [seoOpen, setSeoOpen] = useState(false)
   const [customTag, setCustomTag] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -55,8 +61,10 @@ export default function EditInsightPage() {
 
       if (data) {
         setTitle(data.title)
+        setSlug(data.slug || '')
         setBody(data.body)
         setTags(data.tags ?? [])
+        setSeo(data.seo_meta ? { ...defaultSeo, ...data.seo_meta } : defaultSeo)
       }
       setLoading(false)
     }
@@ -82,10 +90,20 @@ export default function EditInsightPage() {
     }
 
     setSaving(true)
-    const { error: updateError } = await supabase
+    const seoMeta = Object.fromEntries(Object.entries(seo).filter(([, v]) => v.trim() !== ''))
+
+    const { data: updated, error: updateError } = await supabase
       .from('insights')
-      .update({ title: title.trim(), body: body.trim(), tags })
+      .update({
+        title: title.trim(),
+        slug: slug.trim() || null,
+        body: body.trim(),
+        tags,
+        seo_meta: Object.keys(seoMeta).length > 0 ? seoMeta : null,
+      })
       .eq('id', params.id)
+      .select('id, slug')
+      .single()
 
     if (updateError) {
       setError(updateError.message)
@@ -93,7 +111,7 @@ export default function EditInsightPage() {
       return
     }
 
-    router.push(`/insights/${params.id}`)
+    router.push(`/insights/${updated?.slug || updated?.id || params.id}`)
     router.refresh()
   }
 
@@ -151,6 +169,64 @@ export default function EditInsightPage() {
             onChange={e => setTitle(e.target.value)}
             className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-base"
           />
+        </div>
+
+        {/* Slug */}
+        <div>
+          <label className="block text-sm font-bold text-ink mb-2">URL Slug</label>
+          <input
+            type="text"
+            value={slug}
+            onChange={e => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-'))}
+            className="w-full px-4 py-3 rounded-lg border border-line bg-panel text-ink placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors text-base font-mono"
+            placeholder="e.g., india-hotels-sector-overpriced"
+          />
+          <p className="text-xs text-muted mt-1">URL: /insights/<span className="font-mono">{slug || '(uses post ID if blank)'}</span></p>
+        </div>
+
+        {/* SEO */}
+        <div className="border border-line rounded-lg">
+          <button
+            type="button"
+            onClick={() => setSeoOpen(o => !o)}
+            className="w-full flex items-center justify-between px-4 py-3 text-left"
+          >
+            <span className="text-sm font-bold text-ink">SEO Metadata <span className="text-xs font-normal text-muted ml-1">optional</span></span>
+            <span className="text-muted text-sm">{seoOpen ? '▲' : '▼'}</span>
+          </button>
+          {seoOpen && (
+            <div className="px-4 pb-4 space-y-3 border-t border-line pt-3">
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">SEO Title <span className="text-muted font-normal">(max 65 chars)</span></label>
+                <input type="text" value={seo.seo_title} onChange={e => setSeo(p => ({ ...p, seo_title: e.target.value }))}
+                  maxLength={65}
+                  className="w-full px-3 py-2 rounded-lg border border-line bg-panel text-ink text-sm focus:outline-none focus:border-accent"
+                  placeholder="Leave blank to use insight title" />
+                <p className="text-xs text-muted mt-1">{seo.seo_title.length}/65</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Meta Description <span className="text-muted font-normal">(max 160 chars)</span></label>
+                <textarea value={seo.seo_description} onChange={e => setSeo(p => ({ ...p, seo_description: e.target.value }))}
+                  maxLength={160} rows={2}
+                  className="w-full px-3 py-2 rounded-lg border border-line bg-panel text-ink text-sm focus:outline-none focus:border-accent resize-none"
+                  placeholder="Leave blank to auto-extract from body" />
+                <p className="text-xs text-muted mt-1">{seo.seo_description.length}/160</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">OG Title <span className="text-muted font-normal">(social preview)</span></label>
+                <input type="text" value={seo.og_title} onChange={e => setSeo(p => ({ ...p, og_title: e.target.value }))}
+                  className="w-full px-3 py-2 rounded-lg border border-line bg-panel text-ink text-sm focus:outline-none focus:border-accent"
+                  placeholder="Leave blank to use SEO title" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">OG Description <span className="text-muted font-normal">(social preview)</span></label>
+                <textarea value={seo.og_description} onChange={e => setSeo(p => ({ ...p, og_description: e.target.value }))}
+                  rows={2}
+                  className="w-full px-3 py-2 rounded-lg border border-line bg-panel text-ink text-sm focus:outline-none focus:border-accent resize-none"
+                  placeholder="Leave blank to use meta description" />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Tags */}
@@ -247,7 +323,7 @@ export default function EditInsightPage() {
             {saving ? 'Saving…' : 'Save Changes'}
           </button>
           <Link
-            href={`/insights/${params.id}`}
+            href={`/insights/${slug || params.id}`}
             className="text-sm text-muted hover:text-ink transition-colors"
           >
             Cancel

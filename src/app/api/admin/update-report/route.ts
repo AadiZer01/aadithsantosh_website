@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     // Parse request body
     const body = await request.json()
-    const { id, title, content, excerpt, pdf_url, report_meta } = body
+    const { id, title, slug, content, excerpt, pdf_url, report_meta, seo_meta } = body
 
     if (!id || !title || !content) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -34,10 +34,12 @@ export async function POST(request: Request) {
       .from('research_posts')
       .update({
         title,
+        slug: slug || null,
         content,
         excerpt: excerpt || '',
         pdf_url: pdf_url || null,
         report_meta: report_meta || null,
+        seo_meta: seo_meta || null,
       })
       .eq('id', id)
       .select('id, title')

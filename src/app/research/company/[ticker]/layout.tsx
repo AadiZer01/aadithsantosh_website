@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://aadithsantosh.com'
+
 export async function generateMetadata(
   { params }: { params: Promise<{ ticker: string }> }
 ): Promise<Metadata> {
@@ -22,6 +24,9 @@ export async function generateMetadata(
     description:
       m.tagline ||
       `Independent equity research on ${upper}. Valuation analysis and investment recommendations by Aadith Santosh.`,
+    alternates: {
+      canonical: `${SITE_URL}/research/company/${upper}`,
+    },
   }
 }
 

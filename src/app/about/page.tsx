@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: 'About',
   description: 'CA Finalist turned equity researcher. Learn about Aadith Santosh\'s background, valuation philosophy, and approach to independent research on Indian listed companies.',
+  alternates: {
+    canonical: 'https://aadithsantosh.com/about',
+  },
   openGraph: {
     title: 'About Aadith Santosh',
     description: 'CA Finalist turned equity researcher. Valuation philosophy, research approach, and long-term goals in finance.',

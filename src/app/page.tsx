@@ -90,7 +90,7 @@ export default async function Home() {
               return (
                 <Link
                   key={post.id}
-                  href={`/research/${post.id}`}
+                  href={`/research/${post.slug || post.id}`}
                   className="bg-panel border border-line rounded-xl p-6 flex flex-col hover:border-accent/40 transition-colors group"
                 >
                   {/* Ticker + rating */}

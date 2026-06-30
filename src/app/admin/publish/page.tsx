@@ -56,11 +56,28 @@ const defaultMeta: ReportMeta = {
 
 // ─── Main Publish Page ──────────────────────────────────────────────────────
 
+type SeoMeta = {
+  seo_title: string
+  seo_description: string
+  og_title: string
+  og_description: string
+}
+
+const defaultSeo: SeoMeta = {
+  seo_title: '',
+  seo_description: '',
+  og_title: '',
+  og_description: '',
+}
+
 export default function PublishPage() {
   const [title, setTitle] = useState('')
+  const [slug, setSlug] = useState('')
   const [content, setContent] = useState('')
   const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [meta, setMeta] = useState<ReportMeta>(defaultMeta)
+  const [seo, setSeo] = useState<SeoMeta>(defaultSeo)
+  const [seoOpen, setSeoOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -108,22 +125,30 @@ export default function PublishPage() {
       tempDiv.innerHTML = content
       const excerpt = meta.tagline || tempDiv.textContent?.substring(0, 200) || ''
 
+      const seoMeta = Object.fromEntries(
+        Object.entries(seo).filter(([, v]) => v.trim() !== '')
+      )
+
       const { error: insertError } = await supabase.from('research_posts').insert({
         title,
+        slug: slug.trim() || null,
         content,
         excerpt,
         pdf_url,
         author_id: user.id,
         report_meta: meta,
+        seo_meta: Object.keys(seoMeta).length > 0 ? seoMeta : null,
       })
 
       if (insertError) throw insertError
 
       setSuccess(true)
       setTitle('')
+      setSlug('')
       setContent('')
       setPdfFile(null)
       setMeta(defaultMeta)
+      setSeo(defaultSeo)
 
       setTimeout(() => { router.push('/research'); router.refresh() }, 2000)
     } catch (err: any) {
@@ -168,6 +193,13 @@ export default function PublishPage() {
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
                   className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="e.g., Eternal Ltd. — Quick Commerce Expansion" required />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium text-ink mb-1">URL Slug</label>
+                <input type="text" value={slug} onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-'))}
+                  className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent font-mono"
+                  placeholder="e.g., eternal-quick-commerce-buy" />
+                <p className="text-xs text-muted mt-1">Used in the URL: /research/<span className="font-mono">{slug || 'your-slug-here'}</span>. Leave blank to use the post ID.</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-ink mb-1">NSE Ticker</label>
@@ -299,7 +331,52 @@ export default function PublishPage() {
             </div>
           </div>
 
-          {/* ── Section 4: Report Body (Rich Text) ── */}
+          {/* ── Section 4: SEO Metadata (optional overrides) ── */}
+          <div className="bg-panel border border-line rounded-lg">
+            <button
+              type="button"
+              onClick={() => setSeoOpen(o => !o)}
+              className="w-full flex items-center justify-between px-6 py-4 text-left"
+            >
+              <h2 className="text-lg font-bold text-ink">SEO Metadata <span className="text-xs font-normal text-muted ml-2">optional — overrides auto-generated values</span></h2>
+              <span className="text-muted text-sm">{seoOpen ? '▲' : '▼'}</span>
+            </button>
+            {seoOpen && (
+              <div className="px-6 pb-6 grid sm:grid-cols-2 gap-4 border-t border-line pt-4">
+                <div className="sm:col-span-2">
+                  <label className="block text-sm font-medium text-ink mb-1">SEO Title <span className="text-muted font-normal">(Google · max 65 chars)</span></label>
+                  <input type="text" value={seo.seo_title} onChange={e => setSeo(p => ({ ...p, seo_title: e.target.value }))}
+                    maxLength={65}
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="Leave blank to auto-generate from ticker + title" />
+                  <p className="text-xs text-muted mt-1">{seo.seo_title.length}/65</p>
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-sm font-medium text-ink mb-1">Meta Description <span className="text-muted font-normal">(Google · max 160 chars)</span></label>
+                  <textarea value={seo.seo_description} onChange={e => setSeo(p => ({ ...p, seo_description: e.target.value }))}
+                    maxLength={160} rows={2}
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                    placeholder="Leave blank to use tagline or excerpt" />
+                  <p className="text-xs text-muted mt-1">{seo.seo_description.length}/160</p>
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-sm font-medium text-ink mb-1">OG Title <span className="text-muted font-normal">(Twitter / LinkedIn preview)</span></label>
+                  <input type="text" value={seo.og_title} onChange={e => setSeo(p => ({ ...p, og_title: e.target.value }))}
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="Leave blank to use SEO title" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-sm font-medium text-ink mb-1">OG Description <span className="text-muted font-normal">(Twitter / LinkedIn preview)</span></label>
+                  <textarea value={seo.og_description} onChange={e => setSeo(p => ({ ...p, og_description: e.target.value }))}
+                    rows={2}
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                    placeholder="Leave blank to use meta description" />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ── Section 5: Report Body (Rich Text) ── */}
           <div className="bg-panel border border-line rounded-lg p-6">
             <h2 className="text-lg font-bold text-ink mb-4">Report Body</h2>
             <p className="text-xs text-muted mb-3">Use the toolbar to format text, insert tables, and add charts/images.</p>

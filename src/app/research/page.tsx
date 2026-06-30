@@ -6,6 +6,9 @@ import { FileText, Calendar, Eye } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'Research Reports',
   description: 'Independent equity research reports on Indian listed companies. In-depth valuation analysis covering business quality, financial durability, and 12–18 month investment views.',
+  alternates: {
+    canonical: 'https://aadithsantosh.com/research',
+  },
   openGraph: {
     title: 'Research Reports — Aadith Santosh',
     description: 'Independent equity research reports on Indian listed companies. In-depth valuation analysis covering business quality, financial durability, and 12–18 month investment views.',
@@ -64,7 +67,7 @@ export default async function ResearchPage() {
                   className="relative bg-panel border border-line rounded-xl p-6 hover:border-accent/40 transition-colors group"
                 >
                   {/* Full-card link overlay */}
-                  <Link href={`/research/${post.id}`} className="absolute inset-0 rounded-xl" aria-label={post.title} />
+                  <Link href={`/research/${post.slug || post.id}`} className="absolute inset-0 rounded-xl" aria-label={post.title} />
 
                   {/* Top row — ticker, sector, rating */}
                   <div className="relative flex items-center gap-2 flex-wrap mb-3">

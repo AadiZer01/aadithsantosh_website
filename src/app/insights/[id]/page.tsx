@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://aadithsantosh.com'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Calendar, ArrowLeft } from 'lucide-react'
@@ -9,31 +11,56 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { id } = await params
   const supabase = await createClient()
-  const { data: insight } = await supabase
-    .from('insights')
-    .select('title, body, tags')
-    .eq('id', id)
-    .single()
 
+  // Try slug first, then fall back to UUID
+  let { data: insightRows } = await supabase
+    .from('insights')
+    .select('title, body, tags, seo_meta')
+    .eq('slug', id)
+    .limit(1)
+
+  if (!insightRows?.length) {
+    const { data: byId } = await supabase
+      .from('insights')
+      .select('title, body, tags, seo_meta')
+      .eq('id', id)
+      .limit(1)
+    insightRows = byId
+  }
+
+  const insight = insightRows?.[0] ?? null
   if (!insight) return { title: 'Insight Not Found' }
 
+  const s = insight.seo_meta || {}
+  const canonicalSlug = insight.slug || id
+
+  // Auto-generated fallbacks
   const plainText = insight.body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
-  const description = plainText.length > 160
+  const autoDescription = plainText.length > 160
     ? plainText.slice(0, 157).trimEnd() + '…'
     : plainText
 
+  // Manual overrides take precedence
+  const title = s.seo_title || insight.title
+  const description = s.seo_description || autoDescription
+  const ogTitle = s.og_title || insight.title
+  const ogDescription = s.og_description || autoDescription
+
   return {
-    title: insight.title,
+    title,
     description,
+    alternates: {
+      canonical: `${SITE_URL}/insights/${canonicalSlug}`,
+    },
     openGraph: {
-      title: insight.title,
-      description,
+      title: ogTitle,
+      description: ogDescription,
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
-      title: insight.title,
-      description,
+      title: ogTitle,
+      description: ogDescription,
     },
   }
 }
@@ -42,12 +69,23 @@ export default async function InsightPage({ params }: { params: Promise<{ id: st
   const { id } = await params
   const supabase = await createClient()
 
-  const { data: insight } = await supabase
+  // Try slug first, then fall back to UUID
+  let { data: rows } = await supabase
     .from('insights')
     .select('*')
-    .eq('id', id)
-    .single()
+    .eq('slug', id)
+    .limit(1)
 
+  if (!rows?.length) {
+    const { data: byId } = await supabase
+      .from('insights')
+      .select('*')
+      .eq('id', id)
+      .limit(1)
+    rows = byId
+  }
+
+  const insight = rows?.[0] ?? null
   if (!insight) notFound()
 
   const { data: { user } } = await supabase.auth.getUser()

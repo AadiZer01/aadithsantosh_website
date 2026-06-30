@@ -8,12 +8,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const { data: posts } = await supabase
     .from('research_posts')
-    .select('id, updated_at')
+    .select('id, slug, updated_at')
     .eq('published', true)
 
   const { data: insights } = await supabase
     .from('insights')
-    .select('id, created_at')
+    .select('id, slug, created_at')
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
@@ -23,14 +23,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   const postRoutes: MetadataRoute.Sitemap = (posts || []).map((post) => ({
-    url: `${SITE_URL}/research/${post.id}`,
+    url: `${SITE_URL}/research/${post.slug || post.id}`,
     lastModified: new Date(post.updated_at),
     changeFrequency: 'monthly',
     priority: 0.9,
   }))
 
   const insightRoutes: MetadataRoute.Sitemap = (insights || []).map((insight) => ({
-    url: `${SITE_URL}/insights/${insight.id}`,
+    url: `${SITE_URL}/insights/${insight.slug || insight.id}`,
     lastModified: new Date(insight.created_at),
     changeFrequency: 'monthly',
     priority: 0.7,

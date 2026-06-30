@@ -51,29 +51,30 @@ export default function SingleResearchPage() {
 
 
 
-      const { data: post } = await supabase
-
+      // Try slug first, then fall back to UUID — avoids OR string parsing issues
+      let { data: postRows } = await supabase
         .from('research_posts')
-
         .select('*')
+        .eq('slug', params.id)
+        .limit(1)
 
-        .eq('id', params.id)
+      if (!postRows?.length) {
+        const { data: byId } = await supabase
+          .from('research_posts')
+          .select('*')
+          .eq('id', params.id)
+          .limit(1)
+        postRows = byId
+      }
 
-        .single()
-
+      const post = postRows?.[0] ?? null
       setPost(post)
 
-
-
       if (post) {
-
         await supabase
-
           .from('research_posts')
-
           .update({ views: (post.views || 0) + 1 })
-
-          .eq('id', params.id)
+          .eq('id', post.id)
 
         // Fetch live CMP if ticker is available
         const ticker = post.report_meta?.ticker
@@ -90,23 +91,14 @@ export default function SingleResearchPage() {
           }
         }
 
+        const { data: comments } = await supabase
+          .from('comments')
+          .select('*, profiles(email)')
+          .eq('post_id', post.id)
+          .order('created_at', { ascending: true })
+
+        setComments(comments || [])
       }
-
-
-
-      const { data: comments } = await supabase
-
-        .from('comments')
-
-        .select('*, profiles(email)')
-
-        .eq('post_id', params.id)
-
-        .order('created_at', { ascending: true })
-
-      setComments(comments || [])
-
-
 
       setLoading(false)
 
@@ -134,7 +126,7 @@ export default function SingleResearchPage() {
 
       .insert({
 
-        post_id: params.id,
+        post_id: post.id,
 
         user_id: user.id,
 
@@ -152,7 +144,7 @@ export default function SingleResearchPage() {
 
         .select('*, profiles(email)')
 
-        .eq('post_id', params.id)
+        .eq('post_id', post.id)
 
         .order('created_at', { ascending: true })
 
@@ -219,7 +211,7 @@ export default function SingleResearchPage() {
 
         {isAdmin && (
           <Link
-            href={`/admin/edit/${params.id}`}
+            href={`/admin/edit/${post.id}`}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-accent transition-colors"
           >
             <Pencil className="w-3.5 h-3.5" />

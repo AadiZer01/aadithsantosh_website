@@ -6,6 +6,9 @@ import { Calendar, Pencil, X } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'Insights',
   description: 'Short-form market commentary, sector observations, and valuation thinking — published between full research reports.',
+  alternates: {
+    canonical: 'https://aadithsantosh.com/insights',
+  },
   openGraph: {
     title: 'Insights — Aadith Santosh',
     description: 'Short-form market commentary, sector observations, and valuation thinking — published between full research reports.',
@@ -81,7 +84,7 @@ export default async function InsightsPage({
                   key={insight.id}
                   className="relative bg-panel border border-line rounded-xl p-6 hover:border-accent/40 transition-colors group"
                 >
-                  <Link href={`/insights/${insight.id}`} className="absolute inset-0 rounded-xl" aria-label={insight.title} />
+                  <Link href={`/insights/${insight.slug || insight.id}`} className="absolute inset-0 rounded-xl" aria-label={insight.title} />
                   <div className="flex items-center gap-2 mb-3 flex-wrap">
                     {insight.tags?.map((t: string) => (
                       <Link

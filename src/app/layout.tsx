@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     title: 'Aadith Santosh | Independent Equity Research',
     description: 'Fundamentals-driven analysis of Indian public equities. In-depth research on business quality, valuation, and 12–18 month return potential.',
   },
+  alternates: {
+    canonical: SITE_URL,
+  },
   robots: { index: true, follow: true },
 };
 
